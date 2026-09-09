@@ -238,7 +238,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const Spacer(flex: 1),
 
-                          // CURRENCY 
+                          // CURRENCY
                           const FieldLabel(text: 'Primary Currency'),
                           const SizedBox(height: 4),
                           CurrencyDropdown(

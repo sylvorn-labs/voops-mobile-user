@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# ==============================================================================
+# Git Pre-Commit Hook: Dart Formatting & Static Analysis (Linting)
+# ==============================================================================
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# 1. Identify staged Dart files (ignoring deleted files)
+STAGED_DART_FILES=$(git diff --cached --name-only --diff-filter=d | grep '\.dart$' || true)
+
+if [ -n "$STAGED_DART_FILES" ]; then
+  echo "🎨 Formatting staged Dart files..."
+  for file in $STAGED_DART_FILES; do
+    if [ -f "$file" ]; then
+      dart format "$file"
+      git add "$file"
+    fi
+  done
+  echo "✅ Staged Dart files formatted successfully."
+else
+  echo "ℹ️  No staged Dart files to format."
+fi
+
+# 2. Run Flutter Analyzer / Linter
+echo "🔎 Running flutter analyze..."
+if ! flutter analyze; then
+  echo ""
+  echo "❌ flutter analyze found issues. Please resolve them before committing."
+  exit 1
+fi
+
+echo "✨ All pre-commit checks passed successfully!"
+exit 0

@@ -32,7 +32,7 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: const TextStyle(color: Color(0xFFB8C0C2), fontSize: 14),
 
-        prefixIcon: Icon(prefixIcon, size: 20, color: Color(0xFF738083)),
+        prefixIcon: Icon(prefixIcon, size: 20, color: const Color(0xFF738083)),
 
         suffixIcon: onToggleVisibility != null
             ? IconButton(

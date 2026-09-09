@@ -1,17 +1,35 @@
-# expense_tracker
+# Expense Tracker
 
-A new Flutter project.
+A Flutter application for expense tracking.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK (`^3.12.0` / Dart `^3.12.0`)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Setup Git Hooks
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To enable automatic formatting and linting on commit:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+## Code Quality & Formatting
+
+- **Format code**:
+  ```bash
+  dart format .
+  ```
+- **Analyze / Lint code**:
+  ```bash
+  flutter analyze
+  ```
+
+### Pre-commit Hook
+
+The pre-commit hook automatically:
+
+1. Formats any staged `.dart` files with `dart format` and re-stages them.
+2. Runs `flutter analyze` to prevent committing code with lint or type errors.

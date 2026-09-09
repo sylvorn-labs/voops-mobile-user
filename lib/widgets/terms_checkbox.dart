@@ -28,9 +28,7 @@ class TermsCheckbox extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(3),
             ),
-            side: const BorderSide(
-              color: Color(0xFFB8C4C6),
-            ),
+            side: const BorderSide(color: Color(0xFFB8C4C6)),
             onChanged: onChanged,
           ),
         ),

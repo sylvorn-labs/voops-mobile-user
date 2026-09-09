@@ -19,19 +19,14 @@ class CurrencyDropdown extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFF7F9F9),
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: const Color(0xFFB8C4C6),
-          width: 0.8,
-        ),
+        border: Border.all(color: const Color(0xFFB8C4C6), width: 0.8),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: selectedCurrency,
           isExpanded: true,
           borderRadius: BorderRadius.circular(16),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 13,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 13),
           icon: const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: Color(0xFF738083),
