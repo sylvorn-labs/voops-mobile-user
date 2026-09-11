@@ -1,8 +1,11 @@
+import 'package:expense_tracker/constants/color.dart';
+import 'package:expense_tracker/screens/login_screen.dart';
 import 'package:expense_tracker/widgets/custom_text_field.dart';
 import 'package:expense_tracker/widgets/field_label.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/currency_dropdown.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/terms_checkbox.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -124,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                 fontSize: isSmallWidth ? 24 : 28,
                                 fontWeight: FontWeight.w700,
-                                color: const Color(0xFF003D46),
+                                color: AppColor.primary,
                               ),
                             ),
                           ),
@@ -137,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF50595B),
+                                color: AppColor.secondary,
                               ),
                             ),
                           ),
@@ -238,7 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const Spacer(flex: 1),
 
-                          // CURRENCY 
+                          // CURRENCY
                           const FieldLabel(text: 'Primary Currency'),
                           const SizedBox(height: 4),
                           CurrencyDropdown(
@@ -269,29 +272,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const Spacer(flex: 1),
 
                           // CREATE ACCOUNT BUTTON
-                          SizedBox(
-                            width: double.infinity,
-                            height: 42,
-                            child: ElevatedButton(
-                              onPressed: createAccount,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF003D46),
-                                foregroundColor: Colors.white,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                              child: const Text(
-                                'Create Account',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                          CustomButton(
+                            text: 'Create Account',
+                            onPressed: createAccount,
                           ),
-
                           const Spacer(flex: 1),
 
                           // SIGN IN
@@ -303,11 +287,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Already have an account? ',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Color(0xFF50595B),
+                                    color: AppColor.secondary,
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginScreen(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text(
                                     'Sign In',
                                     style: TextStyle(
