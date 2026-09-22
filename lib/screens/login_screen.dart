@@ -1,12 +1,10 @@
-import 'package:expense_tracker/constants/color.dart';
-import 'package:expense_tracker/screens/forget_password_screen.dart';
-import 'package:expense_tracker/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
-
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
+import '../constants/color.dart';
+import '../widgets/custom_buttom.dart';
+import '../widgets/custome_text_field.dart';
 import '../widgets/field_label.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,21 +19,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool rememberMe = false;
   bool obscurePassword = true;
-  bool isLoading = false;
 
-
-  Future<void> Login() async{
+  void signIn() {
     FocusScope.of(context).unfocus();
 
     if (!_formKey.currentState!.validate()) {
       return;
-
     }
 
-
-    debugPrint('Email: ${emailController.text}');
-    debugPrint('Password: ${passwordController.text}');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Logged in successfully!'),
+      ),
+    );
   }
 
   @override
@@ -45,81 +43,57 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
+      backgroundColor: AppColor.white,
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
-            final isSmallHeight = height < 700;
-            final isSmallWidth = width < 360;
-
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 11,
-                  vertical: 8,
-                ),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 500),
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isSmallWidth ? 14 : 18,
-                      vertical: isSmallHeight ? 12 : 20,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(35),
-                      border: Border.all(
-                        color: const Color(0xFF91AEB1),
-                        width: 0.8,
-                      ),
-                    ),
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // FORM CONTENT
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 28.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Spacer(flex: 1),
+                          // Top spacing
+                          const SizedBox(height: 150),
 
                           // TITLE
-                          Center(
-                            child: Text(
-                              'Welcome Back',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: isSmallWidth ? 24 : 28,
-                                fontWeight: FontWeight.w700,
-                                color: AppColor.primary,
-                              ),
+                          const Text(
+                            'Welcome Back',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF111827),
+                              letterSpacing: -0.5,
                             ),
                           ),
 
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 10),
 
-                          const Center(
-                            child: Text(
-                              'Sign in to access your financial dashboard.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: AppColor.secondary,
-                              ),
+                          // SUBTITLE
+                          const Text(
+                            'Sign in to your account to continue.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColor.secondary,
                             ),
                           ),
 
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 38),
 
-                          // EMAIL
-                          const FieldLabel(text: 'Email Address'),
-                          const SizedBox(height: 4),
+                          // EMAIL FIELD
+                          const FieldLabel(text: 'Email', isRequired: true),
+                          const SizedBox(height: 8),
                           CustomTextField(
                             controller: emailController,
                             hintText: 'shree.ram@example.com',
@@ -139,65 +113,109 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
 
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 22),
 
-                          // PASSWORD
-                          const FieldLabel(text: 'Password'),
-                          const SizedBox(height: 4),
+                          // PASSWORD FIELD
+                          const FieldLabel(text: 'Password', isRequired: true),
+                          const SizedBox(height: 8),
                           CustomTextField(
                             controller: passwordController,
-                            hintText: '••••••••',
-                            prefixIcon: Icons.lock_outline,
+                            hintText: 'Your Password',
+                            prefixIcon: Icons.vpn_key_outlined,
                             obscureText: obscurePassword,
-                            onToggleVisibility: () {
-                              setState(() {
-                                obscurePassword = !obscurePassword;
-                              });
-                            },
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter a password';
-                              }
-                              if (value.length < 8) {
-                                return 'Password must be at least 8 characters';
+                                return 'Please enter your password';
                               }
                               return null;
                             },
                           ),
-                          const SizedBox(height: 12,),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPasswordScreen()));
-                              },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Color(0xFF003D46),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
 
                           const SizedBox(height: 16),
 
+                          // REMEMBER ME & FORGOT PASSWORD ROW
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    rememberMe = !rememberMe;
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      decoration: BoxDecoration(
+                                        color: rememberMe
+                                            ? AppColor.primary
+                                            : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                          color: rememberMe
+                                              ? AppColor.primary
+                                              : const Color(0xFFCBD5E1),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: rememberMe
+                                          ? const Icon(
+                                        Icons.check,
+                                        size: 13,
+                                        color: Colors.white,
+                                      )
+                                          : null,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      'Remember Me',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColor.primary,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      const RegisterScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColor.accent,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 36),
+
                           // SIGN IN BUTTON
-                          CustomButton(text: 'Sign In', onPressed: Login),
+                          CustomButton(
+                            text: 'Sign In',
+                            onPressed: signIn,
+                          ),
 
-                          const SizedBox(height: 35),
+                          const SizedBox(height: 20),
 
-                          // REGISTER REDIRECT
+                          // REGISTER LINK
                           Center(
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
                                   "Don't have an account? ",
@@ -212,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const RegisterScreen(),
+                                        const RegisterScreen(),
                                       ),
                                     );
                                   },
@@ -220,24 +238,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                     'Register',
                                     style: TextStyle(
                                       fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColor.primary,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.accent,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-
-                          const Spacer(flex: 1),
+                          const SizedBox(height: 30),
                         ],
                       ),
                     ),
                   ),
-                ),
+
+                  // MOUNTAIN BANNER
+                  Image.asset(
+                    'assets/images/mountain_banner.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ],
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
