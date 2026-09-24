@@ -29,8 +29,10 @@ class VerifyEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Gray_palette.gray1,
       body: SafeArea(
+        bottom: false,
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
@@ -55,7 +57,7 @@ class VerifyEmailScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF111827),
+                            color: Gray_palette.gray12,
                             letterSpacing: -0.5,
                           ),
                         ),
@@ -69,7 +71,7 @@ class VerifyEmailScreen extends StatelessWidget {
                             text: "We've sent a verification link to\n",
                             style: const TextStyle(
                               fontSize: 14,
-                              color: AppColor.secondary,
+                              color: Gray_palette.gray10,
                               height: 1.45,
                             ),
                             children: [
@@ -77,7 +79,7 @@ class VerifyEmailScreen extends StatelessWidget {
                                 text: '$email.\n',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF111827),
+                                  color: Gray_palette.gray11,
                                 ),
                               ),
                               const TextSpan(
@@ -106,7 +108,7 @@ class VerifyEmailScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: AppColor.accent,
+                              color: BrandColor.brand5,
                             ),
                           ),
                         ),

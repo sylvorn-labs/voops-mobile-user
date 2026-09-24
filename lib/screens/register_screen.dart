@@ -55,8 +55,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Gray_palette.gray1,
       body: SafeArea(
+        bottom: false,
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
@@ -82,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF111827),
+                              color: Gray_palette.gray12,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -94,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             'Get started with voops and take control\nof your business finances.',
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColor.secondary,
+                              color: Gray_palette.gray9,
                               height: 1.45,
                             ),
                           ),
@@ -180,7 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Already have an account? ',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: AppColor.secondary,
+                                    color: Gray_palette.gray10,
                                   ),
                                 ),
                                 GestureDetector(
@@ -198,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w600,
-                                      color: AppColor.accent,
+                                      color: BrandColor.brand5,
                                     ),
                                   ),
                                 ),
@@ -215,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Image.asset(
                     'assets/images/mountain_banner.png',
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ],
               ),

@@ -49,8 +49,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Gray_palette.gray1,
       body: SafeArea(
+        bottom: false,
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
@@ -76,7 +78,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF111827),
+                              color: Gray_palette.gray12,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -88,7 +90,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             'Enter your new password below',
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColor.secondary,
+                              color: Gray_palette.gray10,
                             ),
                           ),
 
@@ -157,7 +159,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColor.accent,
+                                  color: BrandColor.brand5,
                                 ),
                               ),
                             ),
