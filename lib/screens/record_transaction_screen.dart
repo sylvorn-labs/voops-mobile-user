@@ -1,3 +1,4 @@
+import 'package:expense_tracker/screens/record_transaction_step2_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/color.dart';
@@ -64,6 +65,7 @@ class _RecordTransactionScreenState extends State<RecordTransactionScreen> {
         content: Text('Transaction recorded as $transactionType!'),
       ),
     );
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordTransactionStep2Screen()));
   }
 
   @override
