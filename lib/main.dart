@@ -1,5 +1,6 @@
 import 'package:expense_tracker/screens/add_account_screen.dart';
 import 'package:expense_tracker/screens/add_business_screen.dart';
+import 'package:expense_tracker/screens/dashboard_screen.dart';
 import 'package:expense_tracker/screens/login_screen.dart';
 import 'package:expense_tracker/screens/record_transaction_step2_screen.dart';
 import 'package:expense_tracker/screens/register_screen.dart';
@@ -30,7 +31,7 @@ class ExpenseTrackerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FinCorp Solutions',
       theme: ThemeData(fontFamily: 'Roboto', useMaterial3: true),
-      home: RecordTransactionStep2Screen(),
+      home: DashboardScreen(),
     );
   }
 }
