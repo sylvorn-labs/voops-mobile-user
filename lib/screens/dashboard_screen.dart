@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../constants/color.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import '../widgets/custome_graph.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -47,6 +48,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       'amount': '\$1899',
       'isIncome': false,
     },
+  ];
+  final List chartData = const [
+  {'month': 'Jan', 'income': 0.6, 'expense': 0.4},
+  {'month': 'Feb', 'income': 0.8, 'expense': 0.5},
+  {'month': 'Mar', 'income': 0.4, 'expense': 0.7},
+  {'month': 'Apr', 'income': 0.9, 'expense': 0.3},
+  {'month': 'May', 'income': 0.7, 'expense': 0.6},
+  {'month': 'Jun', 'income': 0.85, 'expense': 0.4},
   ];
 
   @override
@@ -159,25 +168,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       const SizedBox(height: 14),
 
-                      // ANALYTICS CHART
-                      Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Gray_palette.gray1,
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(color: Gray_palette.gray3),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Analytics Chart Placeholder',
-                            style: TextStyle(
-                              color: Gray_palette.gray6,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // .
+                      CustomeGraph(chartData: chartData),
                     ],
                   ),
                 ),
