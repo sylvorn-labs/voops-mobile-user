@@ -1,5 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'business_settings_screen.dart';
+import 'categories_screen.dart';
+import 'members_screen.dart';
+import 'account_profile_screen.dart';
 
 import '../constants/color.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
@@ -14,6 +20,14 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
+
+  String selectedBusiness = 'Sylvorn Labs';
+
+  final List<String> businesses = [
+    'Sylvorn Labs',
+    'Sylvorn Tech',
+    'Sylvorn Global',
+  ];
 
   final List<Map<String, dynamic>> transactions = const [
     {
@@ -49,14 +63,167 @@ class _DashboardScreenState extends State<DashboardScreen> {
       'isIncome': false,
     },
   ];
+
   final List chartData = const [
-  {'month': 'Jan', 'income': 0.6, 'expense': 0.4},
-  {'month': 'Feb', 'income': 0.8, 'expense': 0.5},
-  {'month': 'Mar', 'income': 0.4, 'expense': 0.7},
-  {'month': 'Apr', 'income': 0.9, 'expense': 0.3},
-  {'month': 'May', 'income': 0.7, 'expense': 0.6},
-  {'month': 'Jun', 'income': 0.85, 'expense': 0.4},
+    {'month': 'Jan', 'income': 0.6, 'expense': 0.4},
+    {'month': 'Feb', 'income': 0.8, 'expense': 0.5},
+    {'month': 'Mar', 'income': 0.4, 'expense': 0.7},
+    {'month': 'Apr', 'income': 0.9, 'expense': 0.3},
+    {'month': 'May', 'income': 0.7, 'expense': 0.6},
+    {'month': 'Jun', 'income': 0.85, 'expense': 0.4},
   ];
+
+  // NAVIGATE TO DRAWER SCREENS
+  void openPage(Widget page) {
+    Navigator.pop(context);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => page,
+      ),
+    );
+  }
+
+  // RIGHT SIDE DRAWER
+  Widget buildEndDrawer() {
+    return Drawer(
+      width: MediaQuery.of(context).size.width * 0.78,
+      backgroundColor: Colors.white,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // DRAWER HEADER
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: BrandColor.brand1,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.account_balance_wallet,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      selectedBusiness,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: BrandColor.brand1,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+            ),
+
+            const Divider(),
+
+            // MANAGEMENT SECTION
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 18, 20, 10),
+              child: Text(
+                'MANAGEMENT',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+
+            // CATEGORIES
+            ListTile(
+              leading: const Icon(
+                Icons.category_outlined,
+                color: BrandColor.brand1,
+              ),
+              title: const Text('Categories'),
+              trailing: const Icon(Icons.chevron_right, size: 20),
+              onTap: () {
+                openPage(const CategoriesScreen());
+              },
+            ),
+
+            // MEMBERS
+            ListTile(
+              leading: const Icon(
+                Icons.people_outline,
+                color: BrandColor.brand1,
+              ),
+              title: const Text('Members'),
+              trailing: const Icon(Icons.chevron_right, size: 20),
+              onTap: () {
+                openPage(const MembersScreen());
+              },
+            ),
+
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Divider(),
+            ),
+
+            // PERSONAL SECTION
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 12, 20, 10),
+              child: Text(
+                'PERSONAL',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+
+            // ACCOUNT / PROFILE
+            ListTile(
+              leading: const Icon(
+                Icons.person_outline,
+                color: BrandColor.brand1,
+              ),
+              title: const Text('Account / Profile'),
+              trailing: const Icon(Icons.chevron_right, size: 20),
+              onTap: () {
+                openPage(const AccountProfileScreen());
+              },
+            ),
+
+            const Spacer(),
+
+            const Divider(),
+
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                '$selectedBusiness • Expense Tracker',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +235,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
 
+        // RIGHT SIDE DRAWER
+        endDrawer: buildEndDrawer(),
+
+        body: SafeArea(
           child: ColoredBox(
             color: BrandColor.brand1,
             child: Column(
               children: [
+                // HEADER AND TOTAL BALANCE
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -90,7 +261,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       // HEADER
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // BUSINESS ICON AND DETAILS
                           Row(
                             children: [
                               Container(
@@ -100,28 +273,99 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   color: BrandColor.brand1,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.account_balance_wallet,
-                                    color: Colors.white,
-                                    size: 22,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(12),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BusinessSettingsScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.account_balance_wallet,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
                                   ),
                                 ),
                               ),
+
                               const SizedBox(width: 12),
+
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Sylvorn Labs',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: BrandColor.brand1,
-                                    ),
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        selectedBusiness,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: BrandColor.brand1,
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 4),
+
+                                      PopupMenuButton<String>(
+                                        padding: EdgeInsets.zero,
+                                        tooltip: 'Switch Business',
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: BrandColor.brand1,
+                                        ),
+                                        onSelected: (String newValue) {
+                                          setState(() {
+                                            selectedBusiness = newValue;
+                                          });
+                                        },
+                                        itemBuilder:
+                                            (BuildContext context) {
+                                          return businesses.map(
+                                                (String business) {
+                                              return PopupMenuItem<String>(
+                                                value: business,
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.business,
+                                                      size: 18,
+                                                      color: business ==
+                                                          selectedBusiness
+                                                          ? BrandColor.brand1
+                                                          : Colors.grey,
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      business,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                        business ==
+                                                            selectedBusiness
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ).toList();
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 2),
-                                  Text(
+
+                                  const SizedBox(height: 2),
+
+                                  const Text(
                                     'INR',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -133,13 +377,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ],
                           ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.menu,
-                              color: BrandColor.brand1,
-                              size: 26,
-                            ),
+
+                          // HAMBURGER MENU - TOP RIGHT
+                          Builder(
+                            builder: (context) {
+                              return IconButton(
+                                onPressed: () {
+                                  Scaffold.of(context).openEndDrawer();
+                                },
+                                icon: const Icon(
+                                  Icons.menu_outlined,
+                                  size: 25,
+                                  color: BrandColor.brand1,
+                                ),
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -155,7 +409,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+
                       const SizedBox(height: 4),
+
                       const Text(
                         '\$18,099.50',
                         style: TextStyle(
@@ -168,15 +424,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       const SizedBox(height: 14),
 
-                      // .
+                      // GRAPH
                       CustomeGraph(chartData: chartData),
                     ],
                   ),
                 ),
 
-                // INCOME & EXPENSE
+                // INCOME AND EXPENSE BUTTONS
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -191,7 +450,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               borderRadius: BorderRadius.circular(24),
                             ),
                           ),
-                          icon: const Icon(Icons.arrow_circle_down_outlined, size: 20),
+                          icon: const Icon(
+                            Icons.arrow_circle_down_outlined,
+                            size: 20,
+                          ),
                           label: const Text(
                             'Income',
                             style: TextStyle(
@@ -201,7 +463,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                       ),
+
                       const SizedBox(width: 14),
+
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () {},
@@ -214,7 +478,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               borderRadius: BorderRadius.circular(24),
                             ),
                           ),
-                          icon: const Icon(Icons.arrow_circle_up_outlined, size: 20),
+                          icon: const Icon(
+                            Icons.arrow_circle_up_outlined,
+                            size: 20,
+                          ),
                           label: const Text(
                             'Expense',
                             style: TextStyle(
@@ -235,7 +502,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(28), // Visible rounded top corners
+                        top: Radius.circular(28),
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -259,9 +526,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 14),
 
-                        // SCROLLABLE TRANSACTIONS LIST
+                        // TRANSACTION LIST
                         Expanded(
                           child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(
@@ -273,7 +541,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             const SizedBox(height: 12),
                             itemBuilder: (context, index) {
                               final tx = transactions[index];
-                              final bool isIncome = tx['isIncome'];
+                              final bool isIncome =
+                              tx['isIncome'] as bool;
 
                               return Container(
                                 padding: const EdgeInsets.all(14),
@@ -300,7 +569,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         size: 20,
                                       ),
                                     ),
+
                                     const SizedBox(width: 14),
+
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -314,7 +585,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               color: BrandColor.brand1,
                                             ),
                                           ),
+
                                           const SizedBox(height: 3),
+
                                           Text(
                                             '${tx['date']} • ${tx['party']}',
                                             style: const TextStyle(
@@ -325,8 +598,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ],
                                       ),
                                     ),
+
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.end,
                                       children: [
                                         Text(
                                           tx['amount'],
@@ -338,7 +613,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 : BrandColor.brand11,
                                           ),
                                         ),
+
                                         const SizedBox(height: 3),
+
                                         Text(
                                           tx['category'],
                                           style: const TextStyle(
